@@ -1,0 +1,2 @@
+# ITSchool-Curs
+Primul repository
