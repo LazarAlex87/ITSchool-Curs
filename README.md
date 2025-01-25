@@ -1,2 +1,3 @@
 # ITSchool-Curs
-Primul repository aa
+Repository cu teme primite la 
+cursul de C++
