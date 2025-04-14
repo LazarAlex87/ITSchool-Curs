@@ -1,0 +1,4 @@
+Alexandru Lazar|1 1 1
+Andrei Popescu|1 2 1
+Mihai Ionescu|2 1 0
+Marin Petrescu|2 2 1
