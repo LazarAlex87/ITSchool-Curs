@@ -1,0 +1,10 @@
+Laptop,3999.99
+Smartphone,2499.49
+Casti wireless,349.90
+Mouse gaming,129.99
+Tastatura wireless,299.00
+Monitor 24",899.95
+SSD 1TB,499.99
+Stick USB 1TB,149.89
+Rucsac laptop,199.50
+Imprimanta,649.30

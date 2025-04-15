@@ -4,9 +4,12 @@
 #include <sstream>
 #include <cstdlib>
 #include <ctime>
+#include <stdexcept>
 #include "meniu_utilizator.h"
 
 using namespace std;
+
+extern void incarcaProduseDinFisier(const string&);
 
 void inregistrare() {
     string email;
@@ -14,11 +17,8 @@ void inregistrare() {
     cout << "Introdu email: ";
     cin >> email;
 
-    //generam un cod random intre 10000 si 99999 pt a fi trimis pe email
     srand(time(0));
-    int cod = rand() % 90000 + 10000; 
-
-    //trimite codul pe email
+    int cod = rand() % 90000 + 10000;
     string comanda = "python trimite_email.py " + email + " cod " + to_string(cod);
     system(comanda.c_str());
 
@@ -33,14 +33,11 @@ void inregistrare() {
         cin >> parola;
 
         ofstream fout("utilizatori.txt", ios::app);
-        if (fout.is_open()) {
-            fout << email << "," << parola << "\n";
-            fout.close();
-            cout << "Cont creat cu succes!\n";
-        }
-        else {
-            cout << "Eroare la deschiderea fisierului!\n";
-        }
+        if (!fout) throw runtime_error("Nu se poate scrie in fisierul utilizatori.txt");
+        fout << email << "," << parola << "\n";
+        fout.close();
+
+        cout << "Cont creat cu succes!\n";
     }
     else {
         cout << "Cod incorect. Inregistrare esuata.\n";
@@ -56,32 +53,28 @@ bool autentificare() {
     cin >> parola;
 
     ifstream fin("utilizatori.txt");
+    if (!fin) throw runtime_error("Nu s-a putut deschide utilizatori.txt");
+
     string linie, savedEmail, savedParola;
+    while (getline(fin, linie)) {
+        stringstream ss(linie);
+        getline(ss, savedEmail, ',');
+        getline(ss, savedParola);
 
-    if (fin.is_open()) {
-        while (getline(fin, linie)) {
-            stringstream ss(linie);
-            getline(ss, savedEmail, ',');
-            getline(ss, savedParola);
-
-            if (savedEmail == email) {
-                if (savedParola == parola) {
-                    cout << "\n\nAutentificare reusita! Bine ai venit, " << email << "!\n";
-                    return true;
-                }
-                else {
-                    cout << "Parola gresita. Reincercati.\n";
-                    return false;
-                }
+        if (savedEmail == email) {
+            if (savedParola == parola) {
+                cout << "\n\nAutentificare reusita! Bine ai venit, " << email << "!\n";
+                return true;
+            }
+            else {
+                cout << "Parola gresita. Reincercati.\n";
+                return false;
             }
         }
-        cout << "Email inexistent. Reincercati.\n";
-        return false;
     }
-    else {
-        cout << "Eroare la deschiderea fisierului!\n";
-        return false;
-    }
+
+    cout << "Email inexistent. Reincercati.\n";
+    return false;
 }
 
 void parolaUitata() {
@@ -91,64 +84,78 @@ void parolaUitata() {
     cin >> email;
 
     ifstream fin("utilizatori.txt");
+    if (!fin) throw runtime_error("Nu s-a putut deschide utilizatori.txt");
+
     string linie, savedEmail, savedParola;
+    while (getline(fin, linie)) {
+        stringstream ss(linie);
+        getline(ss, savedEmail, ',');
+        getline(ss, savedParola);
 
-    if (fin.is_open()) {
-        while (getline(fin, linie)) {
-            stringstream ss(linie);
-            getline(ss, savedEmail, ',');
-            getline(ss, savedParola);
+        if (savedEmail == email) {
+            string comanda = "python trimite_email.py " + email + " parola " + savedParola;
+            system(comanda.c_str());
 
-            if (savedEmail == email) {
-                string comanda = "python trimite_email.py " + email + " parola " + savedParola;
-                system(comanda.c_str());
-
-                cout << "Am trimis parola pe emailul dvs.!\n";
-                return;
-            }
+            cout << "Am trimis parola pe emailul dvs.!\n";
+            return;
         }
-        cout << "Email inexistent. Reincercati.\n";
     }
-    else {
-        cout << "Eroare la deschiderea fisierului!\n";
-    }
+
+    cout << "Email inexistent. Reincercati.\n";
 }
 
-
 int main() {
+    try {
+        incarcaProduseDinFisier("produse.txt");
+    }
+    catch (const exception& e) {
+        cout << "Eroare la incarcare produse: " << e.what() << "\n";
+        return 1;
+    }
+
     int optiune;
     bool autentificat = false;
 
     while (true) {
         if (!autentificat) {
-            cout << "\n----=== Magazin Online ===----\n\n\n";
+            cout << "\n----=== Magazin Online ===----\n\n";
             cout << "         1. Inregistrare\n";
             cout << "         2. Autentificare\n";
             cout << "         3. Parola uitata\n";
             cout << "         0. Iesire\n";
-            cout << "\n\nAlege o optiune: ";
-            cin >> optiune;
+            cout << "\nAlege o optiune: ";
 
-            switch (optiune) {
-            case 1:
-                inregistrare();
-                break;
-            case 2:
-                autentificat = autentificare();
-                break;
-            case 3:
-                parolaUitata();
-                break;
-            case 0:
-                cout << "La revedere!\n";
-                return 0;
-            default:
-                cout << "Optiune invalida. Reincercati.\n";
+            try {
+                if (!(cin >> optiune)) {
+                    throw runtime_error("Trebuie sa introduci un numar!");
+                }
+
+                switch (optiune) {
+                case 1:
+                    inregistrare();
+                    break;
+                case 2:
+                    autentificat = autentificare();
+                    break;
+                case 3:
+                    parolaUitata();
+                    break;
+                case 0:
+                    cout << "La revedere!\n";
+                    return 0;
+                default:
+                    cout << "Optiune invalida. Reincercati.\n";
+                }
+            }
+            catch (const exception& e) {
+                cout << "Eroare: " << e.what() << "\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
             }
         }
         else {
             meniuUtilizatorAutentificat();
-            autentificat = false; 
+            autentificat = false;
         }
     }
 }

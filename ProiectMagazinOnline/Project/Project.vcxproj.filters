@@ -21,9 +21,21 @@
     <ClCompile Include="meniu_utilizator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="produs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cos_cumparaturi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="meniu_utilizator.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="produs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cos_cumparaturi.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

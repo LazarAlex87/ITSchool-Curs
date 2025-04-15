@@ -129,8 +129,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="meniu_utilizator.cpp" />
+    <ClCompile Include="produs.cpp" />
+    <ClCompile Include="cos_cumparaturi.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cos_cumparaturi.h" />
+    <ClInclude Include="produs.h" />
     <ClInclude Include="meniu_utilizator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
