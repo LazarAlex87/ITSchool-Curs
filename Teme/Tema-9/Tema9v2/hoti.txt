@@ -1,0 +1,6 @@
+CiolaNu Marcel    1500      3.5 	400	
+Crin Antonescu    900       4.0		300	
+Ponta Viorel      2000      5.0		500	
+Lasconi Lenuta    1200      3.8		500
+Dan Nicusor       1800      6.0		200	
+Calinescu Georgel 500000    50.0	5000		
