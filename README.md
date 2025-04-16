@@ -18,5 +18,5 @@ Acest proiect este o aplicatie de tip **Magazin Online** scrisa in C++, rulabila
 ##  Cerinte pentru rulare:
 
 - **Compilator C++ (ex: g++, Visual Studio, Code::Blocks etc.)**
-- **Python 3 instalat** pe sistem *(obligatoriu pentru trimiterea codului de inregistrare si parolei prin email)*
+- **Python 3 instalat (se bifeaza adaugare în Path la instalare)** pe sistem (obligatoriu pentru trimiterea codului de inregistrare si parolei prin email)*
 
