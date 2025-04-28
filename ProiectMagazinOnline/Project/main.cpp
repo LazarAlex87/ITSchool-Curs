@@ -9,25 +9,33 @@
 
 using namespace std;
 
+// Declarare functie externa pentru incarcarea produselor din fisier
 extern void incarcaProduseDinFisier(const string&);
 
+// Functie pentru inregistrarea unui utilizator nou
+// Genereaza un cod, il trimite prin email, verifica codul introdus
 void inregistrare() {
     string email;
     cout << "=== Inregistrare ===\n";
     cout << "Introdu email: ";
     cin >> email;
 
+    // Generam un cod random intre 10000 si 99999
     srand(time(0));
     int cod = rand() % 90000 + 10000;
+
+    // Trimitem codul prin email folosind scriptul Python
     string comanda = "python trimite_email.py " + email + " cod " + to_string(cod);
     system(comanda.c_str());
 
+    // Solicitam codul primit de la utilizator
     cout << "Am trimis un cod de verificare pe emailul tau.\n";
     cout << "Introdu codul primit: ";
     int cod_introdus;
     cin >> cod_introdus;
 
     if (cod_introdus == cod) {
+        // Cod corect: cerem parola si salvam contul
         string parola;
         cout << "Cod corect! Acum seteaza parola: ";
         cin >> parola;
@@ -40,10 +48,13 @@ void inregistrare() {
         cout << "Cont creat cu succes!\n";
     }
     else {
+        // Cod introdus gresit
         cout << "Cod incorect. Inregistrare esuata.\n";
     }
 }
 
+// Functie pentru autentificare utilizator
+// Verifica daca emailul si parola exista in fisierul utilizatori.txt
 bool autentificare() {
     string email, parola;
     cout << "=== Autentificare ===\n";
@@ -63,20 +74,25 @@ bool autentificare() {
 
         if (savedEmail == email) {
             if (savedParola == parola) {
+                // Date corecte
                 cout << "\n\nAutentificare reusita! Bine ai venit, " << email << "!\n";
                 return true;
             }
             else {
+                // Parola gresita
                 cout << "Parola gresita. Reincercati.\n";
                 return false;
             }
         }
     }
 
+    // Email inexistent
     cout << "Email inexistent. Reincercati.\n";
     return false;
 }
 
+// Functie pentru recuperarea parolei
+// Trimite parola pe email daca adresa exista
 void parolaUitata() {
     string email;
     cout << "=== Parola uitata ===\n";
@@ -96,16 +112,20 @@ void parolaUitata() {
             string comanda = "python trimite_email.py " + email + " parola " + savedParola;
             system(comanda.c_str());
 
-            cout << "Am trimis parola pe emailul dvs.!\n";
+            cout << "Am trimis parola pe emailul dvs.\n";
             return;
         }
     }
 
+    // Email inexistent
     cout << "Email inexistent. Reincercati.\n";
 }
 
+// Functia principala a aplicatiei
+// Afiseaza meniul principal: Inregistrare, Autentificare, Parola uitata
 int main() {
     try {
+        // Incarcam lista de produse din fisier
         incarcaProduseDinFisier("produse.txt");
     }
     catch (const exception& e) {
@@ -118,6 +138,7 @@ int main() {
 
     while (true) {
         if (!autentificat) {
+            // Afisam meniul principal pentru utilizatorii neinregistrati
             cout << "\n----=== Magazin Online ===----\n\n";
             cout << "         1. Inregistrare\n";
             cout << "         2. Autentificare\n";
@@ -146,16 +167,20 @@ int main() {
                 default:
                     cout << "Optiune invalida. Reincercati.\n";
                 }
+
             }
             catch (const exception& e) {
+                // Tratare input invalid (ex: litere in loc de numere)
                 cout << "Eroare: " << e.what() << "\n";
                 cin.clear();
                 cin.ignore(1000, '\n');
             }
+
         }
         else {
+            // Utilizator autentificat – acces la meniul secundar (produse, cos, comenzi)
             meniuUtilizatorAutentificat();
-            autentificat = false;
+            autentificat = false; // dupa logout
         }
     }
 }
