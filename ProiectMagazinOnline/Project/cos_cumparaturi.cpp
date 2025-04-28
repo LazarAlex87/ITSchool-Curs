@@ -40,7 +40,7 @@ void CosCumparaturi::afiseazaCos() const {
 
     cout << string(42, '-') << "\n";
     cout << right << setw(32) << "TOTAL: "
-        << fixed << setprecision(2) << total() << " RON\n";
+        << fixed << setprecision(2) << total() << " LEI\n";
 }
 
 // Calculeaza totalul cosului
@@ -83,7 +83,7 @@ void CosCumparaturi::afiseazaFacturaDetaliata() const {
 
     cout << string(60, '-') << "\n";
     cout << right << setw(54) << "TOTAL DE PLATA: "
-        << fixed << setprecision(2) << totalFinal << " RON\n";
+        << fixed << setprecision(2) << totalFinal << " LEI\n";
 
     // Salvam comanda in comenzi.txt
     ofstream fout("comenzi.txt", ios::app);
