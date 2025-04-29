@@ -16,7 +16,7 @@ vector<Produs> listaProduse;
 CosCumparaturi cosClient;
 
 // Functie pentru incarcarea produselor din fisierul produse.txt
-// Fiecare linie contine: nume produs,pret produs
+// Fiecare linie contine: nume produs, pret produs
 void incarcaProduseDinFisier(const string& numeFisier) {
     ifstream fin(numeFisier);
     if (!fin.is_open()) {
@@ -62,7 +62,7 @@ void meniuUtilizatorAutentificat() {
                 cout << "\n--- Lista de Produse ---\n";
                 cout << left << setw(4) << "ID"
                     << setw(25) << "Produs"
-                    << setw(10) << "Pret (RON)\n";
+                    << setw(10) << "Pret (LEI)\n";
                 cout << string(40, '-') << "\n";
 
                 // Afisam produsele disponibile
@@ -75,9 +75,9 @@ void meniuUtilizatorAutentificat() {
 
                 cout << "\nIntrodu ID produs (0 pentru inapoi): ";
                 int idProdus;
-                if (!(cin >> idProdus)) {
+                if (!(cin >> idProdus)) {                                   // Verificam daca se introduce un numar valid
                     cout << "Input invalid. Introdu un numar.\n";
-                    cin.clear();
+                    cin.clear();                                            // Cu cin.clear si cin.ignore, fortam utilizatorul sa incerce din nou
                     cin.ignore(1000, '\n');
                     continue;
                 }
@@ -85,14 +85,14 @@ void meniuUtilizatorAutentificat() {
                 if (idProdus == 0)
                     break;
 
-                if (idProdus < 1 || idProdus >(int)listaProduse.size()) {
+                if (idProdus < 1 || idProdus >(int)listaProduse.size()) {   // Daca introducem un nr in afara intervalului produselor disponibile
                     cout << "ID invalid! Reincearca.\n";
                     continue;
                 }
 
                 cout << "Cantitate dorita: ";
                 int cantitate;
-                if (!(cin >> cantitate) || cantitate <= 0) {
+                if (!(cin >> cantitate) || cantitate <= 0) {                // La fel ca la ID
                     cout << "Cantitate invalida! Introdu un numar pozitiv.\n";
                     cin.clear();
                     cin.ignore(1000, '\n');
@@ -128,6 +128,7 @@ void meniuUtilizatorAutentificat() {
 
         case 0:
             // Deconectare - revenim la meniul principal
+            system("cls");
             cout << "Te-ai deconectat cu succes.\n";
             break;
 

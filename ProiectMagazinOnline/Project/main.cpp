@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <sstream>
-#include <cstdlib>
-#include <ctime>
-#include <stdexcept>
+#include <sstream>   // Pt a prelucra text linie cu linie, practic pt a separa campurile dintr-un string 
+#include <cstdlib>   // Pt a genera cod random la inregistrare
+#include <ctime>     // Pt a evidantia data si ora comenzilor in istoric
+#include <stdexcept> // Pt tratarea exceptiilor: runtime_error , logic_error
 #include "meniu_utilizator.h"
 
 using namespace std;
@@ -76,6 +76,7 @@ bool autentificare() {
             if (savedParola == parola) {
                 // Date corecte
                 cout << "\n\nAutentificare reusita! Bine ai venit, " << email << "!\n";
+                system("cls");
                 return true;
             }
             else {

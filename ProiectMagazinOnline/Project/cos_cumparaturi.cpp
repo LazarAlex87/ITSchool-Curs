@@ -27,27 +27,27 @@ void CosCumparaturi::afiseazaCos() const {
 
     cout << "\n--- Produse in cos ---\n";
     cout << left << setw(22) << "Produs"
-        << right << setw(10) << "Pret"
-        << setw(10) << "Cant\n";
+         << right << setw(10) << "Pret"
+         << setw(10) << "Cant\n";
     cout << string(42, '-') << "\n";
 
     for (const auto& entry : produse) {
         cout << left << setw(22) << entry.first->getNume()
-            << right << fixed << setprecision(2)
-            << setw(10) << entry.first->getPret()
-            << setw(10) << entry.second << "\n";
+             << right << fixed << setprecision(2)
+             << setw(10) << entry.first->getPret()
+             << setw(10) << entry.second << "\n";
     }
 
     cout << string(42, '-') << "\n";
     cout << right << setw(32) << "TOTAL: "
-        << fixed << setprecision(2) << total() << " RON\n";
+         << fixed << setprecision(2) << total() << " LEI\n";
 }
 
 // Calculeaza totalul cosului
 double CosCumparaturi::total() const {
     double suma = 0;
     for (const auto& entry : produse) {
-        suma += entry.first->getPret() * entry.second;
+        suma += entry.first->getPret() * entry.second; // Parcurem fiecare produs din cos, vector de perechi: pointer la produs + cantitatea
     }
     return suma;
 }
@@ -61,10 +61,10 @@ void CosCumparaturi::afiseazaFacturaDetaliata() const {
 
     cout << "\n---------------- FACTURA ----------------\n";
     cout << left << setw(4) << "Nr"
-        << setw(22) << "Produs"
-        << right << setw(6) << "Cant"
-        << setw(12) << "Pret"
-        << setw(14) << "Total\n";
+         << setw(22) << "Produs"
+         << right << setw(6) << "Cant"
+         << setw(12) << "Pret"
+         << setw(14) << "Total\n";
     cout << string(60, '-') << "\n";
 
     double totalFinal = 0;
@@ -74,16 +74,16 @@ void CosCumparaturi::afiseazaFacturaDetaliata() const {
         totalFinal += totalProdus;
 
         cout << left << setw(4) << i + 1
-            << setw(22) << entry.first->getNume()
-            << right << setw(6) << entry.second
-            << fixed << setprecision(2)
-            << setw(12) << entry.first->getPret()
-            << setw(14) << totalProdus << "\n";
+             << setw(22) << entry.first->getNume()
+             << right << setw(6) << entry.second
+             << fixed << setprecision(2)
+             << setw(12) << entry.first->getPret()
+             << setw(14) << totalProdus << "\n";
     }
 
     cout << string(60, '-') << "\n";
     cout << right << setw(54) << "TOTAL DE PLATA: "
-        << fixed << setprecision(2) << totalFinal << " RON\n";
+        << fixed << setprecision(2) << totalFinal << " LEI\n";
 
     // Salvam comanda in comenzi.txt
     ofstream fout("comenzi.txt", ios::app);
@@ -93,18 +93,18 @@ void CosCumparaturi::afiseazaFacturaDetaliata() const {
         tm* localTime = localtime(&now);
 
         fout << "Comanda efectuata la: "
-            << (1900 + localTime->tm_year) << "-"
-            << (1 + localTime->tm_mon) << "-"
-            << localTime->tm_mday << " "
-            << localTime->tm_hour << ":"
-            << localTime->tm_min << ":"
-            << localTime->tm_sec << "\n";
+             << (1900 + localTime->tm_year) << "-"
+             << (1 + localTime->tm_mon) << "-"
+             << localTime->tm_mday << " "
+             << localTime->tm_hour << ":"
+             << localTime->tm_min << ":"
+             << localTime->tm_sec << "\n";
 
         fout << left << setw(4) << "Nr"
-            << setw(22) << "Produs"
-            << right << setw(6) << "Cant"
-            << setw(12) << "Pret"
-            << setw(14) << "Total\n";
+             << setw(22) << "Produs"
+             << right << setw(6) << "Cant"
+             << setw(12) << "Pret"
+             << setw(14) << "Total\n";
         fout << string(60, '-') << "\n";
 
         for (size_t i = 0; i < produse.size(); ++i) {
@@ -112,16 +112,16 @@ void CosCumparaturi::afiseazaFacturaDetaliata() const {
             double totalProdus = entry.first->getPret() * entry.second;
 
             fout << left << setw(4) << i + 1
-                << setw(22) << entry.first->getNume()
-                << right << setw(6) << entry.second
-                << fixed << setprecision(2)
-                << setw(12) << entry.first->getPret()
-                << setw(14) << totalProdus << "\n";
+                 << setw(22) << entry.first->getNume()
+                 << right << setw(6) << entry.second
+                 << fixed << setprecision(2)
+                 << setw(12) << entry.first->getPret()
+                 << setw(14) << totalProdus << "\n";
         }
 
         fout << string(60, '-') << "\n";
         fout << right << setw(54) << "TOTAL DE PLATA: "
-            << fixed << setprecision(2) << totalFinal << " RON\n";
+             << fixed << setprecision(2) << totalFinal << " LEI\n";
         fout << "\n------------------------------------------------------------\n";
     }
 }
@@ -140,7 +140,7 @@ void CosCumparaturi::afiseazaComenzi() const {
     }
 
     string linie;
-    while (getline(fin, linie)) {
+    while (getline(fin, linie)) {     // Citeste linie cu linie 
         cout << linie << "\n";
     }
 

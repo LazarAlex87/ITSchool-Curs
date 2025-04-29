@@ -17,6 +17,6 @@ double Produs::getPret() const {
 // Supraincarcam operatorul << pentru afisarea produsului
 ostream& operator<<(ostream& out, const Produs& produs) {
     out << produs.nume << " - "
-        << fixed << setprecision(2) << produs.pret << " RON";
+        << fixed << setprecision(2) << produs.pret << " LEI";
     return out;
 }
