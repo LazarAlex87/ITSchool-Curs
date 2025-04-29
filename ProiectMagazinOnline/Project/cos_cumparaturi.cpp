@@ -40,7 +40,11 @@ void CosCumparaturi::afiseazaCos() const {
 
     cout << string(42, '-') << "\n";
     cout << right << setw(32) << "TOTAL: "
+<<<<<<< HEAD
          << fixed << setprecision(2) << total() << " LEI\n";
+=======
+        << fixed << setprecision(2) << total() << " LEI\n";
+>>>>>>> 86858ff06716b72d57b04c0c0a06518984e32300
 }
 
 // Calculeaza totalul cosului
